@@ -1,5 +1,6 @@
+from typing import Iterable
 import pytest
-from miu import produce, rule1_xI_becomes_xIU, rule2_Mx_becomes_Mxx, rule3_III_becomes_U, rule4_UU_becomes_U
+import miu
 
 
 @pytest.mark.parametrize("string,steps", (
@@ -8,7 +9,7 @@ from miu import produce, rule1_xI_becomes_xIU, rule2_Mx_becomes_Mxx, rule3_III_b
     ("MIU", ["MI", "MIU"])
 ))
 def test_produce(string: str, steps: list[str]) -> None:
-    assert produce(string) == steps
+    assert miu.produce(string) == steps
 
 
 @pytest.mark.parametrize("string,new_strings", (
@@ -16,7 +17,7 @@ def test_produce(string: str, steps: list[str]) -> None:
     ("MII", ["MIIU"])
 ))
 def test_rule1(string: str, new_strings: list[str]):
-    assert list(rule1_xI_becomes_xIU(string)) == new_strings
+    assertItemsEqual(miu.rule1_xI_becomes_xIU(string), new_strings)
 
 
 @pytest.mark.parametrize("string,new_strings", (
@@ -25,7 +26,7 @@ def test_rule1(string: str, new_strings: list[str]):
     ("MU", ["MUU"])
 ))
 def test_rule2(string: str, new_strings: list[str]):
-    assert list(rule2_Mx_becomes_Mxx(string)) == new_strings
+    assertItemsEqual(miu.rule2_Mx_becomes_Mxx(string), new_strings)
 
 
 @pytest.mark.parametrize("string,new_strings", (
@@ -35,7 +36,7 @@ def test_rule2(string: str, new_strings: list[str]):
     ("MIIIII", ["MUII", "MIUI", "MIIU"])
 ))
 def test_rule3(string: str, new_strings: list[str]):
-    assert list(rule3_III_becomes_U(string)) == new_strings
+    assertItemsEqual(miu.rule3_III_becomes_U(string), new_strings)
 
 
 @pytest.mark.parametrize("string,new_strings", (
@@ -44,4 +45,8 @@ def test_rule3(string: str, new_strings: list[str]):
     ("MUUIUU", ["MIUU", "MUUI"])
 ))
 def test_rule4(string: str, new_strings: list[str]):
-    assert list(rule4_UU_becomes_U(string)) == new_strings
+    assertItemsEqual(miu.rule4_UU_is_removed(string), new_strings)
+
+
+def assertItemsEqual(items1: Iterable[str], items2: Iterable[str]) -> bool:
+    assert sorted(list(items1)) == sorted(list(items2))

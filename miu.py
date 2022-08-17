@@ -1,11 +1,12 @@
-from typing import Iterator
+from typing import Iterator, Optional
 
 
 INITIAL_STRING = "MI"
 
 
-def produce(string: str) -> list[str]:
-    rules = [rule1_xI_becomes_xIU, rule2_Mx_becomes_Mxx, rule3_III_becomes_U]
+def produce(string: str) -> Optional[list[str]]:
+    rules = [rule1_xI_becomes_xIU, rule2_Mx_becomes_Mxx,
+             rule3_III_becomes_U, rule4_UU_is_removed]
     seen = {INITIAL_STRING}
     active = [[INITIAL_STRING]]
 
@@ -22,6 +23,8 @@ def produce(string: str) -> list[str]:
                         new_active.append([*steps, new_string])
         active = new_active
 
+    return None
+
 
 def rule1_xI_becomes_xIU(string: str) -> Iterator[str]:
     if string and string[-1] == "I":
@@ -37,8 +40,8 @@ def rule3_III_becomes_U(string: str) -> Iterator[str]:
     return replace_rule(string, "III", "U")
 
 
-def rule4_UU_becomes_U(string: str) -> Iterator[str]:
-    return set(replace_rule(string, "UU", ""))
+def rule4_UU_is_removed(string: str) -> Iterator[str]:
+    return iter(set(replace_rule(string, "UU", "")))
 
 
 def replace_rule(string: str, pattern: str, replacement: str) -> Iterator[str]:
