@@ -16,7 +16,9 @@ def test_produce(string: str, steps: list[str]) -> None:
 
 @pytest.mark.parametrize("string,new_strings", (
     ("MI", ["MIU"]),
-    ("MII", ["MIIU"])
+    ("MII", ["MIIU"]),
+    ("M", []),
+    ("MU", [])
 ))
 def test_rule1(string: str, new_strings: list[str]):
     assertItemsEqual(miu.rule1_xI_becomes_xIU(string), new_strings)
@@ -25,7 +27,9 @@ def test_rule1(string: str, new_strings: list[str]):
 @pytest.mark.parametrize("string,new_strings", (
     ("MIU", ["MIUIU"]),
     ("MUM", ["MUMUM"]),
-    ("MU", ["MUU"])
+    ("MU", ["MUU"]),
+    ("M", []),
+    ("IM", [])
 ))
 def test_rule2(string: str, new_strings: list[str]):
     assertItemsEqual(miu.rule2_Mx_becomes_Mxx(string), new_strings)
@@ -35,7 +39,11 @@ def test_rule2(string: str, new_strings: list[str]):
     ("UMIIIMU", ["UMUMU"]),
     ("MIIII", ["MUI", "MIU"]),
     ("MIII", ["MU"]),
-    ("MIIIII", ["MUII", "MIUI", "MIIU"])
+    ("MIIIII", ["MUII", "MIUI", "MIIU"]),
+    ("MI", []),
+    ("MII", []),
+    ("MU", []),
+    ("MUU", [])
 ))
 def test_rule3(string: str, new_strings: list[str]):
     assertItemsEqual(miu.rule3_III_becomes_U(string), new_strings)
@@ -44,7 +52,10 @@ def test_rule3(string: str, new_strings: list[str]):
 @pytest.mark.parametrize("string,new_strings", (
     ("UUU", ["U"]),
     ("MUUUIII", ["MUIII"]),
-    ("MUUIUU", ["MIUU", "MUUI"])
+    ("MUUIUU", ["MIUU", "MUUI"]),
+    ("MI", []),
+    ("MII", []),
+    ("MIII", [])
 ))
 def test_rule4(string: str, new_strings: list[str]):
     assertItemsEqual(miu.rule4_UU_is_removed(string), new_strings)
