@@ -5,6 +5,8 @@ INITIAL_STRING = "MI"
 
 
 def produce(string: str) -> Optional[list[str]]:
+    if string == INITIAL_STRING:
+        return [INITIAL_STRING]
     if not valid(string):
         return []
 
