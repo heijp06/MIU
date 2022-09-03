@@ -26,3 +26,6 @@ def search(
     Returns:
         Optional[list[TItem]]: A list with the steps from `start` to `end` or None.
     """
+    if start == end:
+        return [start]
+    get_next(start)
