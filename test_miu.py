@@ -7,7 +7,8 @@ import miu
     ("MII", ["MI", "MII"]),
     ("MUI", ["MI", "MII", "MIIII", "MUI"]),
     ("MIU", ["MI", "MIU"]),
-    ("MIX", [])
+    ("MIX", []),
+    ("MI", ["MI"])
 ))
 def test_produce(string: str, steps: list[str]) -> None:
     assert miu.produce(string) == steps
