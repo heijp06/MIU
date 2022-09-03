@@ -6,7 +6,8 @@ import miu
 @pytest.mark.parametrize("string,steps", (
     ("MII", ["MI", "MII"]),
     ("MUI", ["MI", "MII", "MIIII", "MUI"]),
-    ("MIU", ["MI", "MIU"])
+    ("MIU", ["MI", "MIU"]),
+    ("MIX", [])
 ))
 def test_produce(string: str, steps: list[str]) -> None:
     assert miu.produce(string) == steps
@@ -46,6 +47,20 @@ def test_rule3(string: str, new_strings: list[str]):
 ))
 def test_rule4(string: str, new_strings: list[str]):
     assertItemsEqual(miu.rule4_UU_is_removed(string), new_strings)
+
+@pytest.mark.parametrize("string,result", (
+    ("MIX", False),
+    ("IM", False),
+    ("", False),
+    ("MIM", False),
+    ("MU", False),
+    ("M", False),
+    ("MIII", False),
+    ("MIU", True),
+    ("MI", True),
+))
+def test_valid(string: str, result: bool):
+    assert miu.valid(string) == result
 
 
 def assertItemsEqual(items1: Iterable[str], items2: Iterable[str]) -> bool:
