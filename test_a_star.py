@@ -1,16 +1,26 @@
 from a_star import search
-from typing import Iterator, TypeVar
-
-TItem = TypeVar('TItem')
 
 
 def test_search_returns_start_if_equal_to_end():
-    assert search(1, 1, fail_get_next, fail_get_min_distance) == [1]
+    assert search(1, 1, lambda _: [1], lambda: 3) == [1]
 
 
-def fail_get_next(item: TItem) -> Iterator[TItem]:
-    raise AssertionError(f"get_next({item}) was called.")
+def test_search_with_two_steps():
+    assert search(1, 2, lambda _: [2], lambda _: 3) == [1, 2]
 
 
-def fail_get_min_distance(item: TItem) -> int:
-    raise AssertionError(f"get_min_distance({item}) was called.")
+def test_search_with_cycle():
+    assert search(1, 2, lambda _: [1], lambda _: 3) is None
+
+
+def test_search_with_max_length():
+    assert search(1, 2, lambda _: [2], lambda _: 3, 2) is None
+
+
+def test_search_with_initial_wrong_path():
+    assert search(
+        1,
+        9,
+        lambda i: [3, 8] if i == 2 else [i + 1],
+        lambda i: i
+    ) == [1, 2, 8, 9]
