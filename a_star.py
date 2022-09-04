@@ -51,14 +51,12 @@ class Searcher:
         self.result: Node = None
 
     def search(self) -> Optional[list[TItem]]:
-        self.add_item(self.start, 1, None)
+        self.add_item(self.start, 0, None)
 
         while self.heap:
             min_distance, step, node = heappop(self.heap)
             if self.too_long(min_distance):
                 break
-            if self.too_long(step):
-                continue
             if node.item in self.seen:
                 continue
             if node.item == self.end:
@@ -75,7 +73,7 @@ class Searcher:
         return None
 
     def add_item(self, item: TItem, step: int, parent: Optional[Node]) -> None:
-        min_distance = self.get_min_distance(item)
+        min_distance = step + self.get_min_distance(item)
         if self.too_long(min_distance):
             return
         heappush(self.heap, (min_distance, step, Node(item, parent)))
