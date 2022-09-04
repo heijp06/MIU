@@ -51,9 +51,6 @@ class Searcher:
         self.result: Node = None
 
     def search(self) -> Optional[list[TItem]]:
-        if self.start == self.end:
-            return [self.start]
-
         self.add_item(self.start, 1, None)
 
         while self.heap:

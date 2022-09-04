@@ -2,7 +2,7 @@ from a_star import search
 
 
 def test_search_returns_start_if_equal_to_end():
-    assert search(1, 1, lambda _: [1], lambda: 3) == [1]
+    assert search(1, 1, lambda _: [], lambda _: 0) == [1]
 
 
 def test_search_with_two_steps():
