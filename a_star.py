@@ -92,8 +92,10 @@ class Node:
     def __repr__(self) -> str:
         return repr((self.item, self.to_list()))
 
+    def __lt__(self, other: Node) -> bool:
+        return self.to_list() < other.to_list()
+
     def to_list(self) -> list[TItem]:
         if self.previous:
             return self.previous.to_list() + [self.item]
-        else:
-            return [self.item]
+        return [self.item]
